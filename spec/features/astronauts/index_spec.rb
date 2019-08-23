@@ -36,16 +36,15 @@ describe 'astronauts index page' do
     visit '/astronauts'
 
     within "#naut-#{@bob.id}" do
-      expect(page).to have_content("Missions: Apollo 13, Capricorn 4")
+      expect(page).to have_content("Missions:\nApollo 13\nCapricorn 4")
     end
 
     within "#naut-#{@moe.id}" do
-      expect(page).to have_content("Missions: Capricorn 4, Gemini 7")
+      expect(page).to have_content("Missions:\nCapricorn 4\nGemini 7")
     end
 
     within "#naut-#{@joe.id}" do
-      expect(page).to have_content("Missions: Apollo 13, Gemini 7")
+      expect(page).to have_content("Missions:\nApollo 13\nGemini 7")
     end
-
   end
 end

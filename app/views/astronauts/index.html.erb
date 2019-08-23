@@ -2,10 +2,14 @@
 
 <section>
   <% @astronauts.each do |naut| %>
-    <section id="naut-#{naut.id}">
+    <section id="naut-<%=naut.id%>">
       <h2><%=naut.name %></h2>
       <p><%=naut.age %></p>
       <p><%=naut.job %></p>
+      <p>Missions:</p>
+      <% naut.missions.order(:title).each do |mission| %>
+      <p><%= mission.title %></p>
+      <% end %>
     </section>
   <% end %>
   <h3>Average Age: <%= Astronaut.average_age %></h3>
