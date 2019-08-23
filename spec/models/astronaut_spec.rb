@@ -1,6 +1,19 @@
 require 'rails_helper'
 
 describe Astronaut, type: :model do
+  before :each do
+    @bob = Astronaut.create!(name: 'Bob', age: 45, job: 'Pilot')
+    @moe = Astronaut.create!(name: 'Moe', age: 33, job: 'Engineer')
+    @joe = Astronaut.create!(name: 'Joe', age: 36, job: 'Physicist')
+
+    @capricorn = @bob.missions.create(title: 'Capricorn 4', time_in_space: 80)
+    @apollo = @bob.missions.create(title: 'Apollo 13', time_in_space: 100)
+    @gemini = @moe.missions.create(title: 'Gemini 7', time_in_space: 120)
+    @moe.missions << @capricorn
+    @joe.missions << @apollo
+    @joe.missions << @gemini
+  end
+
   describe 'Validations' do
     it { should validate_presence_of :name }
     it { should validate_presence_of :age }
@@ -14,27 +27,12 @@ describe Astronaut, type: :model do
 
   describe 'Class methods' do
     it "average age can calculate the average age of all astronaughts" do
-      bob = Astronaut.create!(name: 'Bob', age: 45, job: 'Pilot')
-      moe = Astronaut.create!(name: 'Moe', age: 33, job: 'Engineer')
-      joe = Astronaut.create!(name: 'Joe', age: 36, job: 'Physicist')
 
       expect(Astronaut.average_age).to eq(38)
     end
   end
 
   describe 'Instance methods' do
-    before :each do
-      @bob = Astronaut.create!(name: 'Bob', age: 45, job: 'Pilot')
-      @moe = Astronaut.create!(name: 'Moe', age: 33, job: 'Engineer')
-      @joe = Astronaut.create!(name: 'Joe', age: 36, job: 'Physicist')
-
-      @capricorn = @bob.missions.create(title: 'Capricorn 4', time_in_space: 80)
-      @apollo = @bob.missions.create(title: 'Apollo 13', time_in_space: 100)
-      @gemini = @moe.missions.create(title: 'Gemini 7', time_in_space: 120)
-      @moe.missions << @capricorn
-      @joe.missions << @apollo
-      @joe.missions << @gemini
-    end
     it "mission_list returns an array of mission titles per astronaut sorted alphabetically" do
       expect(@bob.mission_list).to eq(['Apollo 13','Capricorn 4'])
       expect(@moe.mission_list).to eq(['Capricorn 4','Gemini 7'])
