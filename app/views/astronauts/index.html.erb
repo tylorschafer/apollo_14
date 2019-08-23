@@ -10,6 +10,7 @@
       <% naut.missions.order(:title).each do |mission| %>
       <p><%= mission.title %></p>
       <% end %>
+      <p>Total Time in Space: <%= naut.total_time_in_space %> days</p>
     </section>
   <% end %>
   <h3>Average Age: <%= Astronaut.average_age %></h3>

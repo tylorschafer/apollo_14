@@ -47,11 +47,7 @@ describe 'astronauts index page' do
       expect(page).to have_content("Missions:\nApollo 13\nGemini 7")
     end
   end
-  # As a visitor,
-  # When I visit '/astronauts'
-  # I see the total time in space for each astronaut.
-  # (e.g. "Name: Neil Armstrong, Age: 37, Job: Commander, Total Time in Space: 760 days")
-  #
+
   it "I can see the total time in space spent for each astronaut" do
     visit '/astronauts'
 
