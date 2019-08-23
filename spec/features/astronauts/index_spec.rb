@@ -7,9 +7,9 @@ describe 'astronauts index page' do
     @joe = Astronaut.create!(name: 'Joe', age: 36, job: 'Physicist')
     @all = [@bob,@moe,@joe]
 
-    @capricorn = @bob.missions.create(title: 'Capricorn 4', time_in_space: 84)
-    @apollo = @bob.missions.create(title: 'Apollo 13', time_in_space: 120)
-    @gemini = @moe.missions.create(title: 'Gemini 7', time_in_space: 134)
+    @capricorn = @bob.missions.create(title: 'Capricorn 4', time_in_space: 80)
+    @apollo = @bob.missions.create(title: 'Apollo 13', time_in_space: 100)
+    @gemini = @moe.missions.create(title: 'Gemini 7', time_in_space: 120)
     @moe.missions << @capricorn
     @joe.missions << @apollo
     @joe.missions << @gemini
@@ -45,6 +45,26 @@ describe 'astronauts index page' do
 
     within "#naut-#{@joe.id}" do
       expect(page).to have_content("Missions:\nApollo 13\nGemini 7")
+    end
+  end
+  # As a visitor,
+  # When I visit '/astronauts'
+  # I see the total time in space for each astronaut.
+  # (e.g. "Name: Neil Armstrong, Age: 37, Job: Commander, Total Time in Space: 760 days")
+  #
+  it "I can see the total time in space spent for each astronaut" do
+    visit '/astronauts'
+
+    within "#naut-#{@bob.id}" do
+      expect(page).to have_content("Total Time in Space: 180 days")
+    end
+
+    within "#naut-#{@moe.id}" do
+      expect(page).to have_content("Total Time in Space: 200 days")
+    end
+
+    within "#naut-#{@joe.id}" do
+      expect(page).to have_content("Total Time in Space: 220 days")
     end
   end
 end
