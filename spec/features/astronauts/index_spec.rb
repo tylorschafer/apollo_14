@@ -11,11 +11,15 @@ describe 'astronauts index page' do
     visit '/astronauts'
 
     @all.each do |naut|
-      within "#naut-#{naut.id}" do
         expect(page).to have_content(naut.name)
         expect(page).to have_content(naut.age)
         expect(page).to have_content(naut.job)
-      end
     end
+  end
+
+  it "I can see the average age of all astronauts" do
+    visit '/astronauts'
+
+    expect(page).to have_content("Average age: 38")
   end
 end
