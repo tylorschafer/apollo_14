@@ -23,21 +23,28 @@ describe Astronaut, type: :model do
   end
 
   describe 'Instance methods' do
+    before :each do
+      @bob = Astronaut.create!(name: 'Bob', age: 45, job: 'Pilot')
+      @moe = Astronaut.create!(name: 'Moe', age: 33, job: 'Engineer')
+      @joe = Astronaut.create!(name: 'Joe', age: 36, job: 'Physicist')
+
+      @capricorn = @bob.missions.create(title: 'Capricorn 4', time_in_space: 80)
+      @apollo = @bob.missions.create(title: 'Apollo 13', time_in_space: 100)
+      @gemini = @moe.missions.create(title: 'Gemini 7', time_in_space: 120)
+      @moe.missions << @capricorn
+      @joe.missions << @apollo
+      @joe.missions << @gemini
+    end
+    it "mission_list returns an array of mission titles per astronaut sorted alphabetically" do
+      expect(@bob.mission_list).to eq(['Apollo 13','Capricorn 4'])
+      expect(@moe.mission_list).to eq(['Capricorn 4','Gemini 7'])
+      expect(@joe.mission_list).to eq(['Apollo 13','Gemini 7'])
+    end
+
     it "time_in_space calculates total time in space per astronaut" do
-      bob = Astronaut.create!(name: 'Bob', age: 45, job: 'Pilot')
-      moe = Astronaut.create!(name: 'Moe', age: 33, job: 'Engineer')
-      joe = Astronaut.create!(name: 'Joe', age: 36, job: 'Physicist')
-
-      capricorn = bob.missions.create(title: 'Capricorn 4', time_in_space: 80)
-      apollo = bob.missions.create(title: 'Apollo 13', time_in_space: 100)
-      gemini = moe.missions.create(title: 'Gemini 7', time_in_space: 120)
-      moe.missions << capricorn
-      joe.missions << apollo
-      joe.missions << gemini
-
-      expect(bob.total_time_in_space).to eq(180)
-      expect(moe.total_time_in_space).to eq(200)
-      expect(joe.total_time_in_space).to eq(220)
+      expect(@bob.total_time_in_space).to eq(180)
+      expect(@moe.total_time_in_space).to eq(200)
+      expect(@joe.total_time_in_space).to eq(220)
     end
   end
 end

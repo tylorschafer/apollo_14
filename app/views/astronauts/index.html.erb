@@ -7,8 +7,8 @@
       <p><%=naut.age %></p>
       <p><%=naut.job %></p>
       <p>Missions:</p>
-      <% naut.missions.order(:title).each do |mission| %>
-      <p><%= mission.title %></p>
+      <% naut.mission_list.each do |title| %>
+      <p><%= title %></p>
       <% end %>
       <p>Total Time in Space: <%= naut.total_time_in_space %> days</p>
     </section>

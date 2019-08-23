@@ -7,6 +7,10 @@ class Astronaut < ApplicationRecord
     Astronaut.average(:age)
   end
 
+  def mission_list
+    missions.order(:title).pluck(:title)
+  end
+
   def total_time_in_space
     missions.sum(:time_in_space)
   end
